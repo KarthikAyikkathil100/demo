@@ -1,0 +1,23 @@
+{
+  "name": "cicddemo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/kartik.ayikkathil/cicddemo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/kartik.ayikkathil/cicddemo/issues"
+  },
+  "homepage": "https://gitlab.com/kartik.ayikkathil/cicddemo#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
