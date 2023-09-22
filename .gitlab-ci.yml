@@ -10,7 +10,7 @@ build:
   only:
     - staging
   script:
-    - docker login -u "$DOCKER_USERNAME" -p $(aws ecr get-login-password --region us-east-1)
+    - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
     - docker build -t ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME} .
     - docker push ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}
 staging:
