@@ -29,7 +29,7 @@ staging:
       --force-recreate ${CI_COMMIT_REF_NAME}"
   before_script:
     - mkdir -p ~/.ssh
-    - echo "$STAGE_SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - echo "$STAGING_SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
     - chmod 700 ~/.ssh/id_rsa
     - eval "$(ssh-agent -s)"
     - ssh-add ~/.ssh/id_rsa
