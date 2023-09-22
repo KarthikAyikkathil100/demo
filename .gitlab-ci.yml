@@ -1,0 +1,36 @@
+---
+stages:
+  - build
+  - staging
+image: gitlab/dind
+services:
+  - docker:dind
+build:
+  stage: build
+  only:
+    - staging
+  script:
+    - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+    - docker build -t ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME} .
+    - docker push ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}
+staging:
+  stage: staging
+  dependencies:
+    - build
+  only:
+    - staging
+  script:
+    - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo  docker image prune -f"
+    - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo docker login -u
+      $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+    - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo docker-compose pull
+      ${CI_COMMIT_REF_NAME}"
+    - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo docker-compose up -d
+      --force-recreate ${CI_COMMIT_REF_NAME}"
+  before_script:
+    - mkdir -p ~/.ssh
+    - echo "$STAGE_SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -H $STAGE_SERVER_IP >> ~/.ssh/known_hosts
