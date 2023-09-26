@@ -24,9 +24,9 @@ staging:
     - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo docker login -u
       $DOCKER_USERNAME -p $DOCKER_PASSWORD"
     - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo docker-compose pull
-      ${CI_COMMIT_REF_NAME}"
+      ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}"
     - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo docker-compose up -d
-      --force-recreate ${CI_COMMIT_REF_NAME}"
+      --force-recreate ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}"
   before_script:
     - mkdir -p ~/.ssh
     - echo "$STAGING_SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
