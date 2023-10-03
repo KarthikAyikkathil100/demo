@@ -1,4 +1,3 @@
-const serverlessExpress = require("aws-serverless-express");
 require("dotenv").config();
 const express = require("express");
 
@@ -26,6 +25,7 @@ app.get("/test", (req, res) => {
   res.status(200).send("Working!!");
 });
 
-const server = serverlessExpress.createServer(app);
 
-exports.handler = (event, context) => { serverlessExpress.proxy(server, event, context) }
+app.listen(port, () => {
+  console.log("Server started on port ", port);
+});
