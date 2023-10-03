@@ -28,6 +28,4 @@ app.get("/test", (req, res) => {
 
 const server = serverlessExpress.createServer(app);
 
-app.listen(port, () => {
-  console.log("Server started on port ", port);
-});
+exports.handler = (event, context) => { serverlessExpress.proxy(server, event, context) }
