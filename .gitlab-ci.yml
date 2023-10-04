@@ -25,7 +25,7 @@ staging:
       $DOCKER_USERNAME -p $DOCKER_PASSWORD"
     - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo docker pull
       ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}"
-    - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo docker start ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}"
+    - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo docker run ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}:latest --detach"
   before_script:
     - mkdir -p ~/.ssh
     - echo "$STAGING_SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
