@@ -30,6 +30,11 @@ staging:
       else
         echo "No running containers to stop.";
       fi"
+    - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "if [ "$(docker ps -q)" ]; then
+        sudo docker kill $(docker ps -q);
+      else
+        echo "No running containers to kill.";
+      fi"
     - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo docker run --detach -p 4000:4000 ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}:latest"
   before_script:
     - mkdir -p ~/.ssh
