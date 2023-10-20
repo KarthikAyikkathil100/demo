@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/test", (req, res) => {
-  res.status(200).send("Working, stay calm! (update 2) => ", process.env.DB_NAME);
+  res.status(200).send("Working, stay calm! (update 3) => ", process.env.DB_NAME);
 });
 
 
