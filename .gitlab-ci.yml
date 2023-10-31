@@ -34,18 +34,18 @@ staging:
     - ssh-add ~/.ssh/id_rsa
     - ssh-keyscan -H $STAGE_SERVER_IP >> ~/.ssh/known_hosts
     - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo  docker image prune -f"
-    - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "if [$(sudo docker ps -q)]; then
-        sudo docker stop $(sudo docker ps -q);
+    - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "if [ \$(sudo docker ps -q) ]; then
+        sudo docker stop \$(sudo docker ps -q);
       else
         echo 'No running containers to stop.';
       fi"
-    - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "if [$(sudo docker ps -q)]; then
-        sudo docker kill $(sudo docker ps -q);
+    - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "if [ \$(sudo docker ps -q) ]; then
+        sudo docker kill \$(sudo docker ps -q);
       else
         echo 'No running containers to kill.';
       fi"
-    - ssh ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "if [ $(sudo docker ps -q) ]; then
-        sudo docker rm -f $(sudo docker ps -q);
+    - ssh ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "if [ \$(sudo docker ps -q) ]; then
+        sudo docker rm -f \$(sudo docker ps -q);
       else
         echo 'No running containers to remove.';
       fi"
