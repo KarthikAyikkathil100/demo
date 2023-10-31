@@ -22,10 +22,14 @@ app.get("/", (req, res) => {
 });
 
 app.get("/test", (req, res) => {
-  res.status(200).json({
-    msg: "CI/CD is working, cool!!",
-    meta: 'WFH is better, update 1',
-  });
+  try {
+    res.status(200).json({
+      msg: "CI/CD is working, cool!!",
+      meta: 'WFH is better, update 1',
+    });
+  } catch(e) {
+    res.status(500).send('Error');
+  }
 });
 
 
