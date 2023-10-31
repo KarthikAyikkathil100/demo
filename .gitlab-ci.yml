@@ -36,7 +36,7 @@ staging:
         echo "No running containers to kill.";
       fi"
     - ssh ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "if [ "$(sudo docker ps -q)" ]; then
-        sudo docker rm -f "$(sudo docker ps -q)"
+        sudo docker rm -f "$(sudo docker ps -q)";
       else
         echo "No running containers to remove.";
       fi"
