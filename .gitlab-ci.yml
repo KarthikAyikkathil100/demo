@@ -10,7 +10,8 @@ build:
     - staging
   script:
     - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-    - cat ${${CI_COMMIT_REF_NAME}_env}
+    - export env_file=${CI_COMMIT_REF_NAME/-/_}_env
+    - cp ${!env_file} ./.env
     - docker build -t ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME} .
     - docker push ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}
     - echo "Build succeded"
