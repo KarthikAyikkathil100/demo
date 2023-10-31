@@ -20,11 +20,21 @@ staging:
   only:
     - staging
   script:
-    - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo  docker image prune -f"
     - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo docker login -u
       $DOCKER_USERNAME -p $DOCKER_PASSWORD"
     - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo docker pull
       ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}"
+    - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo docker run --detach -p 4000:4000 ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}:latest"
+  before_script:
+    - mkdir -p ~/.ssh
+    - echo "$STAGING_SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -H $STAGE_SERVER_IP >> ~/.ssh/known_hosts
+    - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo docker login -u
+      $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+    - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo  docker image prune -f"
     - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "if [ "$(sudo docker ps -q)" ]; then
         sudo docker stop $(sudo docker ps -q);
       else
@@ -40,11 +50,3 @@ staging:
       else
         echo "No running containers to remove.";
       fi"
-    - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo docker run --detach -p 4000:4000 ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}:latest"
-  before_script:
-    - mkdir -p ~/.ssh
-    - echo "$STAGING_SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
-    - chmod 700 ~/.ssh/id_rsa
-    - eval "$(ssh-agent -s)"
-    - ssh-add ~/.ssh/id_rsa
-    - ssh-keyscan -H $STAGE_SERVER_IP >> ~/.ssh/known_hosts
