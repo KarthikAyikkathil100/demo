@@ -51,3 +51,4 @@ staging:
       else
         echo "No running containers to remove.";
       fi"
+    - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo docker ps -q"
