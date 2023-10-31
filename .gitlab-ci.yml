@@ -7,8 +7,6 @@ services:
   - docker:19.03.5-dind
 build:
   stage: build
-  only:
-    - staging
   script:
     - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
     - export env_file=${CI_COMMIT_REF_NAME/-/_}_env
