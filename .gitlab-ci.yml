@@ -4,7 +4,7 @@ stages:
   - staging
 image: gitlab/dind
 services:
-  - docker:dind
+  - docker:19.03.5-dind
 build:
   stage: build
   only:
