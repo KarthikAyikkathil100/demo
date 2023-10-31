@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 
 app.get("/test", (req, res) => {
   res.status(200).json({
-    msg: "CI/CD is working",
+    msg: "CI/CD is working, cool!!",
     meta: 'WFH is better, update 1',
   });
 });
