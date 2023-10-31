@@ -33,8 +33,6 @@ staging:
     - eval "$(ssh-agent -s)"
     - ssh-add ~/.ssh/id_rsa
     - ssh-keyscan -H $STAGE_SERVER_IP >> ~/.ssh/known_hosts
-    - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo docker login -u
-      $DOCKER_USERNAME -p $DOCKER_PASSWORD"
     - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo  docker image prune -f"
     - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "if [$(sudo docker ps -q)]; then
         sudo docker stop $(sudo docker ps -q);
