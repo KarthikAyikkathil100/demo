@@ -25,7 +25,7 @@ app.get("/test", (req, res) => {
   try {
     res.status(200).json({
       msg: "CI/CD is working, cool!!",
-      meta: 'WFH is better, update 1',
+      meta: 'WFH is better, update 2',
       imp_data: `${process.env.DB_NAME}`
     });
   } catch(e) {
