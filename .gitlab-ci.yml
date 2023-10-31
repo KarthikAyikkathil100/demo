@@ -26,12 +26,12 @@ staging:
     - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "sudo docker pull
       ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}"
     - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "if [ "$(sudo docker ps -q)" ]; then
-        sudo docker stop $(docker ps -q);
+        sudo docker stop $(sudo docker ps -q);
       else
         echo "No running containers to stop.";
       fi"
     - ssh  ${SERVER_USER_NAME}@${STAGE_SERVER_IP} "if [ "$(sudo docker ps -q)" ]; then
-        sudo docker kill $(docker ps -q);
+        sudo docker kill $(sudo docker ps -q);
       else
         echo "No running containers to kill.";
       fi"
